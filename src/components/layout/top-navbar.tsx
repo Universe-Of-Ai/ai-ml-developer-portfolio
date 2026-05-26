@@ -1,7 +1,8 @@
 "use client";
 
-import { Search, Bell } from "lucide-react";
+import { Search } from "lucide-react";
 import Link from "next/link";
+import { NotificationsDropdown } from "./notification-bell";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -46,10 +47,7 @@ export function TopNavbar() {
           </Link>
 
           {/* Notifications */}
-          <button className="relative p-2 rounded-lg hover:bg-muted transition-colors">
-            <Bell className="w-5 h-5 text-muted-foreground" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
-          </button>
+          <NotificationsDropdown />
 
           {/* Avatar Dropdown */}
           <DropdownMenu>

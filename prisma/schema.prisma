@@ -8,43 +8,59 @@ datasource db {
 }
 
 model User {
-  id             String     @id @default(cuid())
-  email          String     @unique
-  username       String     @unique
-  displayName    String
-  avatar         String?
-  bio            String?
-  isVerified     Boolean    @default(false)
-  followersCount Int        @default(0)
-  followingCount Int        @default(0)
-  duelsWon       Int        @default(0)
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  posts          Post[]
-  comments       Comment[]  @relation("CommentAuthor")
-  reactions      Reaction[] @relation("UserReactions")
+  id               String           @id @default(cuid())
+  email            String           @unique
+  username         String           @unique
+  displayName      String
+  avatar           String?
+  bio              String?
+  isVerified       Boolean          @default(false)
+  isAdmin          Boolean          @default(false)
+  followersCount   Int              @default(0)
+  followingCount   Int              @default(0)
+  duelsWon         Int              @default(0)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  posts            Post[]
+  comments         Comment[]        @relation("CommentAuthor")
+  reactions        Reaction[]       @relation("UserReactions")
+  notifications    Notification[]   @relation("NotifUser")
+  sentMessages     Message[]        @relation("MsgSender")
+  receivedMessages Message[]        @relation("MsgRecipient")
+  challengerDuels  DuetChallenge[]  @relation("ChallengerDuels")
+  opponentDuels    DuetChallenge[]  @relation("OpponentDuels")
+  reports          Report[]         @relation("ReportReporter")
 }
 
 model Post {
-  id                String   @id @default(cuid())
-  type              String   @default("POEM")
-  authorId          String
-  author            User     @relation(fields: [authorId], references: [id])
-  anonAuthorId      String?
-  isAnonymous       Boolean  @default(false)
-  title             String?
-  body              String
-  bodyText          String?
-  tags              String   @default("[]")
-  coverImage        String?
-  visibility        String   @default("PUBLIC")
-  collaborationMode String   @default("CLOSED")
-  reactionsCount    Int      @default(0)
-  commentsCount     Int      @default(0)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  reactions         Reaction[]
-  comments          Comment[]
+  id                    String          @id @default(cuid())
+  type                  String          @default("POEM")
+  authorId              String
+  author                User            @relation(fields: [authorId], references: [id])
+  anonAuthorId          String?
+  isAnonymous           Boolean         @default(false)
+  title                 String?
+  body                  String
+  bodyText              String?
+  tags                  String          @default("[]")
+  coverImage            String?
+  videoUrl              String?
+  thumbnailUrl          String?
+  visibility            String          @default("PUBLIC")
+  collaborationMode     String          @default("CLOSED")
+  parentStoryId         String?
+  branchParagraphIndex  Int?
+  reactionsCount        Int             @default(0)
+  commentsCount         Int             @default(0)
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  reactions             Reaction[]
+  comments              Comment[]
+  collaborations        Collaboration[]
+  challengerDuetPost    DuetChallenge?   @relation("ChallengerDuetPost")
+  challengerPostId     String?  @unique
+  opponentDuetPost      DuetChallenge?   @relation("OpponentDuetPost")
+  opponentPostId       String?  @unique
 }
 
 model Reaction {
@@ -52,7 +68,7 @@ model Reaction {
   postId      String
   post        Post     @relation(fields: [postId], references: [id])
   userId      String?
-  user        User?     @relation("UserReactions", fields: [userId], references: [id])
+  user        User?    @relation("UserReactions", fields: [userId], references: [id])
   type        String   @default("love")
   isAnonymous Boolean  @default(false)
   createdAt   DateTime @default(now())
@@ -77,4 +93,85 @@ model Follow {
   followerId  String
   followingId String
   createdAt   DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation("NotifUser", fields: [userId], references: [id])
+  actorId   String?
+  type      String
+  postId    String?
+  commentId String?
+  message   String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id           String    @id @default(cuid())
+  threadId     String
+  sender       User      @relation("MsgSender", fields: [senderId], references: [id])
+  senderId     String
+  recipient    User      @relation("MsgRecipient", fields: [recipientId], references: [id])
+  recipientId  String
+  anonSenderId String?
+  isAnonymous  Boolean   @default(false)
+  body         String
+  readAt       DateTime?
+  createdAt    DateTime  @default(now())
+}
+
+model Collaboration {
+  id                String   @id @default(cuid())
+  poemId            String
+  post              Post     @relation(fields: [poemId], references: [id])
+  contributorId     String?
+  anonContributorId String?
+  isAnonymous       Boolean  @default(false)
+  stanzaBody        String
+  status            String   @default("PENDING")
+  createdAt         DateTime @default(now())
+}
+
+model DuetChallenge {
+  id                 String   @id @default(cuid())
+  challengerId       String
+  challenger         User     @relation("ChallengerDuels", fields: [challengerId], references: [id])
+  opponentId         String
+  opponent           User     @relation("OpponentDuels", fields: [opponentId], references: [id])
+  type               String   @default("POEM")
+  prompt             String?
+  acceptDeadline     DateTime
+  submissionDeadline DateTime
+  votingDeadline     DateTime
+  status             String   @default("PENDING")
+  challengerPostId   String?  @unique
+  challengerPost     Post?    @relation("ChallengerDuetPost", fields: [challengerPostId], references: [id])
+  opponentPostId     String?  @unique
+  opponentPost       Post?    @relation("OpponentDuetPost", fields: [opponentPostId], references: [id])
+  challengerVotes    Int      @default(0)
+  opponentVotes      Int      @default(0)
+  winnerId           String?
+  createdAt          DateTime @default(now())
+}
+
+model DuetVote {
+  id       String   @id @default(cuid())
+  duelId   String
+  voterId  String
+  choice   String
+  createdAt DateTime @default(now())
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  reporter   User     @relation("ReportReporter", fields: [reporterId], references: [id])
+  reporterId String
+  targetType String
+  targetId   String
+  category   String   @default("OTHER")
+  reason     String?
+  status     String   @default("pending")
+  createdAt  DateTime @default(now())
 }

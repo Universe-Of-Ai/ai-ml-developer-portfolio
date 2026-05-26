@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, FileText, Heart } from "lucide-react";
+import { BookOpen, FileText, Heart, Video } from "lucide-react";
 
 const writeOptions = [
   {
@@ -29,6 +29,14 @@ const writeOptions = [
     color: "bg-rose-50 text-rose-500",
     hoverBg: "hover:bg-rose-500/5",
   },
+  {
+    href: "/write/recitation",
+    title: "আবৃত্তি",
+    desc: "কবিতা আবৃত্তি ভিডিও আপলোড করুন",
+    icon: Video,
+    color: "bg-purple-50 text-purple-500",
+    hoverBg: "hover:bg-purple-500/5",
+  },
 ];
 
 export default function WriteHub() {
@@ -46,22 +54,14 @@ export default function WriteHub() {
           const Icon = option.icon;
           return (
             <Link key={option.href} href={option.href}>
-              <Card
-                className={`border-border/50 transition-all hover:shadow-md ${option.hoverBg} active:scale-[0.98]`}
-              >
+              <Card className={`border-border/50 transition-all hover:shadow-md ${option.hoverBg} active:scale-[0.98]`}>
                 <CardContent className="flex items-center gap-4 p-4">
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center ${option.color}`}
-                  >
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${option.color}`}>
                     <Icon className="w-5 h-5" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-bold text-foreground text-sm">
-                      {option.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {option.desc}
-                    </p>
+                    <h3 className="font-bold text-foreground text-sm">{option.title}</h3>
+                    <p className="text-xs text-muted-foreground mt-0.5">{option.desc}</p>
                   </div>
                   <span className="text-muted-foreground text-lg">←</span>
                 </CardContent>

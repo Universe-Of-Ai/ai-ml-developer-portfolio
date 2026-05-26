@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String     @id @default(cuid())
+  email          String     @unique
+  username       String     @unique
+  displayName    String
+  avatar         String?
+  bio            String?
+  isVerified     Boolean    @default(false)
+  followersCount Int        @default(0)
+  followingCount Int        @default(0)
+  duelsWon       Int        @default(0)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  posts          Post[]
+  comments       Comment[]  @relation("CommentAuthor")
+  reactions      Reaction[] @relation("UserReactions")
+}
+
+model Post {
+  id                String   @id @default(cuid())
+  type              String   @default("POEM")
+  authorId          String
+  author            User     @relation(fields: [authorId], references: [id])
+  anonAuthorId      String?
+  isAnonymous       Boolean  @default(false)
+  title             String?
+  body              String
+  bodyText          String?
+  tags              String   @default("[]")
+  coverImage        String?
+  visibility        String   @default("PUBLIC")
+  collaborationMode String   @default("CLOSED")
+  reactionsCount    Int      @default(0)
+  commentsCount     Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  reactions         Reaction[]
+  comments          Comment[]
+}
+
+model Reaction {
+  id          String   @id @default(cuid())
+  postId      String
+  post        Post     @relation(fields: [postId], references: [id])
+  userId      String?
+  user        User?     @relation("UserReactions", fields: [userId], references: [id])
+  type        String   @default("love")
+  isAnonymous Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model Comment {
+  id             String    @id @default(cuid())
+  postId         String
+  post           Post      @relation(fields: [postId], references: [id])
+  parentCommentId String?
+  author         User?     @relation("CommentAuthor", fields: [authorId], references: [id])
+  authorId       String?
+  anonAuthorId   String?
+  isAnonymous    Boolean   @default(false)
+  body           String
+  reactionsCount Int       @default(0)
+  createdAt      DateTime  @default(now())
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+}

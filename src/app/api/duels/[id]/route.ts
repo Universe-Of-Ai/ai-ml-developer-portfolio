@@ -1,17 +1,16 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-export async function GET(request: Request) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { searchParams } = new URL(request.url);
-    const duelId = searchParams.get("duelId");
+    const { id } = await params;
 
-    if (!duelId) {
+    if (!id) {
       return NextResponse.json({ success: false, error: "duelId প্রয়োজন" }, { status: 400 });
     }
 
     const duel = await db.duetChallenge.findUnique({
-      where: { id: duelId },
+      where: { id },
       include: {
         challenger: { select: { id: true, username: true, displayName: true, avatar: true } },
         opponent: { select: { id: true, username: true, displayName: true, avatar: true } },

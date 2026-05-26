@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, PenSquare, MessageCircle, User, Settings, Shield } from "lucide-react";
+import { Home, Search, PenSquare, MessageCircle, User, Settings, Shield, Users, Play, Swords } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -12,6 +12,9 @@ const mainNav = [
   { href: "/explore", label: "অনুসন্ধান", icon: Search },
   { href: "/write", label: "লিখুন", icon: PenSquare },
   { href: "/messages", label: "বার্তা", icon: MessageCircle },
+  { href: "/collaborations", label: "সহযোগিতা", icon: Users },
+  { href: "/recitations", label: "আবৃত্তি", icon: Play },
+  { href: "/duels", label: "দ্বন্দ্ব", icon: Swords },
   { href: "/settings", label: "প্রোফাইল", icon: User },
   { href: "/settings", label: "সেটিংস", icon: Settings },
   { href: "/admin", label: "অ্যাডমিন", icon: Shield },

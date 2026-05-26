@@ -5,7 +5,7 @@ import { Heart, MessageCircle, Share2, Play, Pause, Eye, EyeOff, Link as LinkIco
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface RecitationPost {
   id: string;

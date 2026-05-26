@@ -4,9 +4,28 @@ import { db } from "@/lib/db";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
+    const threadId = searchParams.get("threadId");
     const userId = searchParams.get("userId") || "demo_user_001";
 
-    // Get all threads for this user
+    // If threadId provided, fetch messages for that thread
+    if (threadId) {
+      const messages = await db.message.findMany({
+        where: { threadId },
+        orderBy: { createdAt: "asc" },
+        take: 100,
+        select: {
+          id: true,
+          body: true,
+          senderId: true,
+          recipientId: true,
+          isAnonymous: true,
+          createdAt: true,
+        },
+      });
+      return NextResponse.json({ success: true, data: messages });
+    }
+
+    // Otherwise return thread list
     const sent = await db.message.findMany({
       where: { senderId: userId },
       select: { threadId: true, recipientId: true, isAnonymous: true },

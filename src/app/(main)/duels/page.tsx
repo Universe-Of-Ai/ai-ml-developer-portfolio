@@ -90,7 +90,7 @@ export default function DuelsPage() {
     try {
       const res = await fetch("/api/duels", {
         method: "POST",
-        headers: { "Content-Type: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           challengerId: "demo_user_001",
           opponentId: "demo_user_002",

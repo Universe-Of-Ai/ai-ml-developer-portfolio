@@ -46,8 +46,11 @@ export default function MessagesPage() {
   const openThread = async (thread: Thread) => {
     setActiveThread(thread.threadId);
     try {
-      // Fetch messages for thread (using search API — mock for now)
-      setMessages([]);
+      const res = await fetch(`/api/messages?threadId=${thread.threadId}`);
+      const data = await res.json();
+      if (data.success) {
+        setMessages(data.data);
+      }
     } catch { /* silent */ }
   };
 

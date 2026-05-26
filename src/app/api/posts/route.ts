@@ -9,6 +9,8 @@ const createPostSchema = z.object({
   bodyText: z.string().nullable(),
   tags: z.string().default("[]"),
   coverImage: z.string().nullable().optional(),
+  videoUrl: z.string().nullable().optional(),
+  thumbnailUrl: z.string().nullable().optional(),
   isAnonymous: z.boolean().default(false),
   visibility: z.enum(["PUBLIC", "FOLLOWERS", "PRIVATE"]).default("PUBLIC"),
   collaborationMode: z.enum(["CLOSED", "OPEN", "MODERATED"]).default("CLOSED"),
@@ -40,6 +42,8 @@ export async function POST(request: Request) {
         bodyText: data.bodyText,
         tags: data.tags,
         coverImage: data.coverImage || null,
+        videoUrl: data.videoUrl || null,
+        thumbnailUrl: data.thumbnailUrl || null,
         isAnonymous: data.isAnonymous,
         visibility: data.visibility,
         collaborationMode: data.collaborationMode,
@@ -95,5 +99,27 @@ export async function GET(request: Request) {
       { success: false, error: message },
       { status: 500 }
     );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const body = await request.json();
+    const { postId } = body;
+
+    if (!postId) {
+      return NextResponse.json({ success: false, error: "পোস্ট আইডি প্রয়োজন" }, { status: 400 });
+    }
+
+    // Delete related records first
+    await db.reaction.deleteMany({ where: { postId } });
+    await db.comment.deleteMany({ where: { postId } });
+    await db.collaboration.deleteMany({ where: { poemId: postId } });
+    await db.post.delete({ where: { id: postId } });
+
+    return NextResponse.json({ success: true, message: "পোস্ট মুছে ফেলা হয়েছে" });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "সার্ভারে সমস্যা হয়েছে";
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }

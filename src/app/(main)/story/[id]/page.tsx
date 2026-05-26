@@ -147,7 +147,7 @@ export default function StoryDetailPage() {
       >
         <h1
           className="text-2xl sm:text-3xl font-bold leading-snug"
-          style={{ fontFamily: "'Noto Sans Bengali', serif" }}
+          style={{ fontFamily: "'Noto Serif Bengali', serif" }}
         >
           {mockStory.title}
         </h1>
@@ -208,7 +208,7 @@ export default function StoryDetailPage() {
                 <p
                   key={index}
                   className="text-[15px] sm:text-base leading-[2] text-foreground/85 text-justify"
-                  style={{ fontFamily: "'Noto Sans Bengali', serif" }}
+                  style={{ fontFamily: "'Noto Serif Bengali', serif" }}
                 >
                   {para}
                 </p>
@@ -221,7 +221,7 @@ export default function StoryDetailPage() {
               <div className="w-1 h-1 rounded-full bg-secondary/50" />
               <span
                 className="text-muted-foreground/50 text-xs mx-2"
-                style={{ fontFamily: "'Noto Sans Bengali', serif" }}
+                style={{ fontFamily: "'Noto Serif Bengali', serif" }}
               >
                 সমাপ্ত
               </span>

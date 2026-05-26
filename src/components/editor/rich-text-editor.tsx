@@ -79,7 +79,7 @@ export function RichTextEditor({
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleBold().run()}
           active={editor.isActive("bold")}
-          tooltip="গা callerে (Bold)"
+          tooltip="গাঢ় (Bold)"
         >
           <Bold className="w-4 h-4" />
         </ToolbarButton>

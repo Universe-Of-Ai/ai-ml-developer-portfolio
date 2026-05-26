@@ -15,7 +15,7 @@ const mainNav = [
   { href: "/collaborations", label: "সহযোগিতা", icon: Users },
   { href: "/recitations", label: "আবৃত্তি", icon: Play },
   { href: "/duels", label: "দ্বন্দ্ব", icon: Swords },
-  { href: "/settings", label: "প্রোফাইল", icon: User },
+  { href: "/profile/me", label: "প্রোফাইল", icon: User },
   { href: "/settings", label: "সেটিংস", icon: Settings },
   { href: "/admin", label: "অ্যাডমিন", icon: Shield },
 ];

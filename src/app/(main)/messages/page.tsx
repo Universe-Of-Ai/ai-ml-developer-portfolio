@@ -151,7 +151,7 @@ export default function MessagesPage() {
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               className="flex-1"
             />
-            <Button size="icon" onClick={sendMessage} className="bg-primary hover:bg-teal-dark shrink-0">
+            <Button size="icon" onClick={sendMessage} className="bg-primary hover:bg-primary/90 shrink-0">
               <Send className="w-4 h-4" />
             </Button>
           </div>
@@ -193,7 +193,7 @@ export default function MessagesPage() {
                   <p className="text-xs text-muted-foreground truncate">{thread.lastMsg}</p>
                 </div>
                 {thread.isAnonymous && (
-                  <Badge variant="secondary" className="text-[10px] bg-amber-50 text-amber shrink-0">অজানা</Badge>
+                  <Badge variant="secondary" className="text-[10px] bg-secondary/20 text-secondary shrink-0">অজানা</Badge>
                 )}
                 <span className="text-[10px] text-muted-foreground">{timeAgo(thread.lastTime)}</span>
               </CardContent>

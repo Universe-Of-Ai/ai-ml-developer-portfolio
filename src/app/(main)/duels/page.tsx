@@ -126,7 +126,7 @@ export default function DuelsPage() {
         </h1>
         <Dialog open={challengeOpen} onOpenChange={setChallengeOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-primary hover:bg-teal-dark">
+            <Button className="bg-primary hover:bg-primary/90">
               <Plus className="w-4 h-4 mr-1" /> নতুন দ্বন্দ্ব
             </Button>
           </DialogTrigger>
@@ -163,7 +163,7 @@ export default function DuelsPage() {
                 <Label className="text-sm cursor-pointer">বেনামী</Label>
                 <Switch checked={form.isAnonymous} onCheckedChange={(v) => setForm({ ...form, isAnonymous: v })} />
               </div>
-              <Button onClick={createChallenge} className="w-full bg-primary hover:bg-teal-dark">
+              <Button onClick={createChallenge} className="w-full bg-primary hover:bg-primary/90">
                 দ্বন্দ্ব পাঠান
               </Button>
             </div>

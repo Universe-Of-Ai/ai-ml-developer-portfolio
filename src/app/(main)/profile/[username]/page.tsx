@@ -47,7 +47,7 @@ export default function ProfilePage() {
       <Card className="border-border/50 mb-4">
         <CardContent className="p-5">
           {/* Cover placeholder */}
-          <div className="h-28 -mx-5 -mt-5 mb-4 bg-gradient-to-r from-teal-dark via-teal to-amber rounded-t-xl" />
+          <div className="h-28 -mx-5 -mt-5 mb-4 bg-gradient-to-r from-primary via-secondary to-chart-3 rounded-t-xl" />
 
           <div className="flex flex-col sm:flex-row sm:items-end gap-4 -mt-10 relative z-10">
             <Avatar className="w-20 h-20 border-4 border-white shadow-md">
@@ -64,7 +64,7 @@ export default function ProfilePage() {
                 {mockUser.isVerified && (
                   <Badge
                     variant="secondary"
-                    className="bg-teal-light text-white text-[10px] px-1.5 py-0"
+                    className="bg-secondary text-white text-[10px] px-1.5 py-0"
                   >
                     যাচাইকৃত
                   </Badge>
@@ -78,7 +78,7 @@ export default function ProfilePage() {
               className={
                 isFollowing
                   ? ""
-                  : "bg-primary hover:bg-teal-dark"
+                  : "bg-primary hover:bg-primary/90"
               }
               onClick={() => setIsFollowing(!isFollowing)}
             >
@@ -108,7 +108,7 @@ export default function ProfilePage() {
               যোগদান: {mockUser.joinedDate}
             </span>
             {mockUser.duelsWon > 0 && (
-              <span className="flex items-center gap-1 text-amber">
+              <span className="flex items-center gap-1 text-secondary">
                 <Award className="w-3.5 h-3.5" />
                 {mockUser.duelsWon} দ্বন্দ্ব জয়
               </span>

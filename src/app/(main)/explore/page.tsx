@@ -84,7 +84,7 @@ export default function ExplorePage() {
                     <p className="text-xs text-muted-foreground">@{u.username as string}</p>
                   </div>
                   {u.isVerified && (
-                    <Badge variant="secondary" className="text-[10px] bg-teal-light text-white">যাচাইকৃত</Badge>
+                    <Badge variant="secondary" className="text-[10px] bg-secondary text-white">যাচাইকৃত</Badge>
                   )}
                 </CardContent>
               </Card>

@@ -24,10 +24,10 @@ export default function RootLayout({
           toastOptions={{
             style: {
               borderRadius: "12px",
-              background: "#FFFFFF",
-              border: "1px solid #E2E8F0",
+              background: "#FFFDF7",
+              border: "1px solid #E8DCC8",
               boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-              fontFamily: "'Noto Sans Bengali', sans-serif",
+              fontFamily: "'Hind Siliguri', sans-serif",
             },
           }}
         />

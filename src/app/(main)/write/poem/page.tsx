@@ -154,7 +154,7 @@ export default function WritePoemPage() {
         <Button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full bg-primary hover:bg-teal-dark py-5 text-base"
+          className="w-full bg-primary hover:bg-primary/90 py-5 text-base"
         >
           {loading ? "প্রকাশ হচ্ছে..." : "প্রকাশ করুন"}
         </Button>

@@ -56,7 +56,7 @@ export default function SettingsPage() {
                   কস
                 </AvatarFallback>
               </Avatar>
-              <button className="absolute -bottom-1 -right-1 w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-md hover:bg-teal-dark transition-colors">
+              <button className="absolute -bottom-1 -right-1 w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-md hover:bg-primary/90 transition-colors">
                 <Camera className="w-3.5 h-3.5 text-white" />
               </button>
             </div>
@@ -101,7 +101,7 @@ export default function SettingsPage() {
           <Button
             onClick={handleSave}
             disabled={saving}
-            className="bg-primary hover:bg-teal-dark"
+            className="bg-primary hover:bg-primary/90"
           >
             <Save className="w-4 h-4 mr-1.5" />
             {saving ? "সংরক্ষণ হচ্ছে..." : "সংরক্ষণ করুন"}

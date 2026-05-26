@@ -226,7 +226,7 @@ export default function AdminPage() {
                             <Check className="w-3.5 h-3.5 text-green-600" />
                           </Button>
                           <Button variant="ghost" size="sm" className="text-xs h-7" onClick={() => dismissReport(report.id)} title="বাতিল">
-                            <Ban className="w-3.5 h-3.5 text-amber-600" />
+                            <Ban className="w-3.5 h-3.5 text-secondary" />
                           </Button>
                           <Button variant="ghost" size="sm" className="text-xs h-7" onClick={() => deleteReport(report.id)} title="মুছুন">
                             <Trash2 className="w-3.5 h-3.5 text-destructive" />
@@ -291,7 +291,7 @@ export default function AdminPage() {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-0.5">
                             <Badge className="text-[9px] bg-muted text-muted-foreground">{typeLabels[post.type] || post.type}</Badge>
-                            {post.isAnonymous && <Badge className="text-[9px] bg-amber-50 text-amber-700">অজ্ঞাত</Badge>}
+                            {post.isAnonymous && <Badge className="text-[9px] bg-secondary/10 text-secondary">অজ্ঞাত</Badge>}
                             <Badge className="text-[9px] bg-muted text-muted-foreground">{post.visibility}</Badge>
                           </div>
                           <p className="text-sm font-medium truncate">{post.title || "শিরোনামহীন"}</p>

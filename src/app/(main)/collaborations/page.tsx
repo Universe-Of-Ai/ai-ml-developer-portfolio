@@ -166,7 +166,7 @@ export default function CollaborationsPage() {
           </div>
           <Dialog open={submitOpen} onOpenChange={setSubmitOpen}>
             <DialogTrigger asChild>
-              <Button size="sm" className="bg-primary hover:bg-teal-dark">
+              <Button size="sm" className="bg-primary hover:bg-primary/90">
                 <Plus className="w-4 h-4 mr-1" /> স্তবক যোগ করুন
               </Button>
             </DialogTrigger>
@@ -186,7 +186,7 @@ export default function CollaborationsPage() {
                     <Switch checked={isAnon} onCheckedChange={setIsAnon} />
                     অজ্ঞাতনামা
                   </label>
-                  <Button onClick={submitStanza} disabled={!stanza.trim()} className="bg-primary hover:bg-teal-dark">
+                  <Button onClick={submitStanza} disabled={!stanza.trim()} className="bg-primary hover:bg-primary/90">
                     জমা দিন
                   </Button>
                 </div>

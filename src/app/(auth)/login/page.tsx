@@ -95,7 +95,7 @@ export default function LoginPage() {
               </div>
               <Button
                 type="submit"
-                className="w-full bg-primary hover:bg-teal-dark"
+                className="w-full bg-primary hover:bg-primary/90"
                 disabled={loading}
               >
                 {loading ? "লগইন হচ্ছে..." : "লগইন"}

@@ -33,7 +33,7 @@ export function MobileNav() {
                 href={item.href}
                 className="flex items-center justify-center -mt-5"
               >
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg hover:bg-teal-dark transition-colors active:scale-95">
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg hover:bg-primary/90 transition-colors active:scale-95">
                   <Icon className="w-5 h-5 text-white" />
                 </div>
               </Link>

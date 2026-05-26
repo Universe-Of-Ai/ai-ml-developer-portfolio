@@ -133,20 +133,20 @@ export default function DuetPage({ params }: { params: Promise<{ id: string }> }
         {/* Opponent Side */}
         <Card
           className={`border-2 transition-all cursor-pointer ${
-            hasVoted ? "" : "border-border hover:border-amber hover:shadow-md"
+            hasVoted ? "" : "border-border hover:border-secondary hover:shadow-md"
           } ${hasVoted ? "border-muted/30 opacity-70" : ""}`}
           onClick={() => !hasVoted && handleVote("opponent")}
         >
           <CardContent className="p-5">
             <div className="text-center mb-3">
-              <span className="text-xs bg-amber-50 text-amber px-3 py-1 rounded-full font-medium">পক্ষ ২</span>
+              <span className="text-xs bg-secondary/10 text-secondary px-3 py-1 rounded-full font-medium">পক্ষ ২</span>
             </div>
             <div className="text-center min-h-[120px] flex items-center justify-center">
               <p className="text-sm text-muted-foreground">প্রতিপক্ষের কাজ এখানে দেখাবে</p>
             </div>
             <div className="text-center mt-3">
               <p className="text-xs text-muted-foreground">{duel.opponent?.displayName}</p>
-              <p className="text-lg font-bold text-amber">{duel.opponentVotes}</p>
+              <p className="text-lg font-bold text-secondary">{duel.opponentVotes}</p>
             </div>
           </CardContent>
         </Card>
@@ -164,7 +164,7 @@ export default function DuetPage({ params }: { params: Promise<{ id: string }> }
         </Button>
         <Button
           variant="outline"
-          className="flex-1 border-amber text-amber"
+          className="flex-1 border-secondary text-secondary"
           disabled={hasVoted}
           onClick={() => handleVote("opponent")}
         >

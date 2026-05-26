@@ -16,3 +16,4 @@ examples/
 mini-services/
 supabase-schema.sql
 cover.html
+.vercel

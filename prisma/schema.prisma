@@ -175,3 +175,53 @@ model Report {
   status     String   @default("pending")
   createdAt  DateTime @default(now())
 }
+
+model WorkspaceTask {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  status      String   @default("backlog")
+  priority    String   @default("medium")
+  assignee    String   @default("vexis")
+  dueDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  order       Int      @default(0)
+}
+
+model CrossCommMessage {
+  id        String   @id @default(cuid())
+  sender    String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model WorkspaceProject {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  status      String   @default("active")
+  progress    Int      @default(0)
+  teamMembers String   @default("[]")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model KnowledgeDoc {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  category  String
+  excerpt   String?
+  icon      String   @default("FileText")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  agent     String
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+}

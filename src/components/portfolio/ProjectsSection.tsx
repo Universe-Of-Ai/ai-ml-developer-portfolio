@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { ExternalLink, Github } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -16,6 +16,11 @@ const fadeInUp = {
     opacity: 1,
     y: 0,
     transition: { duration: 0.5, delay: i * 0.1, ease: 'easeOut' },
+  }),
+  exit: (i: number) => ({
+    opacity: 0,
+    y: 20,
+    transition: { duration: 0.3, delay: i * 0.05, ease: 'easeIn' },
   }),
 };
 
@@ -64,6 +69,7 @@ export default function ProjectsSection() {
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
+              aria-pressed={activeFilter === cat}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeFilter === cat
                   ? 'dark:bg-accent-cyan/15 dark:text-accent-cyan bg-accent-cyan/10 text-accent-blue dark:border-accent-cyan/30 border-accent-blue/30 border shadow-sm'
@@ -77,87 +83,96 @@ export default function ProjectsSection() {
 
         {/* Projects Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {filteredProjects.map((project, i) => (
-            <motion.div
-              key={project.title}
-              custom={i}
-              variants={fadeInUp}
-              initial="hidden"
-              animate={isInView ? 'visible' : 'hidden'}
-              whileHover={{ y: -4, boxShadow: '0 8px 30px rgba(0,0,0,0.12)' }}
-              className="group relative overflow-hidden rounded-2xl dark:border-white/5 border-gray-200 dark:bg-white/[0.02] bg-white backdrop-blur-sm dark:hover:border-white/10 hover:border-gray-300 transition-all duration-300"
-            >
-              {/* Project image placeholder */}
-              <div
-                className={`relative h-44 bg-gradient-to-br ${project.gradient} flex items-center justify-center overflow-hidden`}
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, i) => (
+              <motion.div
+                key={project.title}
+                custom={i}
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                layout
+                whileHover={{ y: -6, boxShadow: '0 12px 40px rgba(0, 212, 255, 0.12)' }}
+                transition={{ duration: 0.3 }}
+                className="group relative overflow-hidden rounded-2xl dark:border-white/5 border-gray-200 dark:bg-white/[0.02] bg-white backdrop-blur-sm dark:hover:border-accent-cyan/20 hover:border-accent-blue/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent-cyan/5"
               >
+                {/* Project image placeholder */}
                 <div
-                  className="absolute inset-0 opacity-10"
-                  style={{
-                    backgroundImage:
-                      'linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px)',
-                    backgroundSize: '16px 16px',
-                  }}
-                />
-                <project.icon
-                  className={`relative z-10 size-12 ${project.iconColor} opacity-60 group-hover:opacity-90 group-hover:scale-110 transition-all duration-300`}
-                />
-              </div>
+                  className={`relative h-44 bg-gradient-to-br ${project.gradient} flex items-center justify-center overflow-hidden`}
+                >
+                  <div
+                    className="absolute inset-0 opacity-10"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px)',
+                      backgroundSize: '16px 16px',
+                    }}
+                  />
+                  <project.icon
+                    className={`relative z-10 size-12 ${project.iconColor} opacity-60 group-hover:opacity-90 group-hover:scale-110 transition-all duration-300`}
+                  />
+                </div>
 
-              {/* Content */}
-              <div className="p-5">
-                <h3 className="text-lg font-semibold dark:text-white text-gray-900 mb-2 dark:group-hover:text-accent-cyan group-hover:text-accent-blue transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-sm dark:text-white/40 text-gray-500 leading-relaxed mb-4">
-                  {project.description}
-                </p>
+                {/* Content */}
+                <div className="p-5">
+                  <h3 className="text-lg font-semibold dark:text-white text-gray-900 mb-2 dark:group-hover:text-accent-cyan group-hover:text-accent-blue transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm dark:text-white/40 text-gray-500 leading-relaxed mb-4">
+                    {project.description}
+                  </p>
 
-                {/* Category badges */}
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {project.category.map((cat) => (
-                    <Badge
-                      key={cat}
-                      className="dark:bg-accent-cyan/10 bg-accent-blue/10 dark:text-accent-cyan text-accent-blue text-[10px] px-2 py-0 font-medium border-0"
+                  {/* Category badges */}
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {project.category.map((cat) => (
+                      <Badge
+                        key={cat}
+                        className="dark:bg-accent-cyan/10 bg-accent-blue/10 dark:text-accent-cyan text-accent-blue text-[10px] px-2 py-0 font-medium border-0"
+                      >
+                        {cat}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {project.tags.map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className="dark:border-white/5 border-gray-200 dark:bg-white/5 bg-gray-50 dark:text-white/50 text-gray-500 text-[10px] px-2 py-0 font-medium"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  {/* Links */}
+                  <div className="flex items-center gap-3 pt-3 dark:border-t border-t dark:border-white/5 border-gray-200">
+                    <a
+                      href="https://github.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs dark:text-white/40 text-gray-500 dark:hover:text-accent-cyan hover:text-accent-blue transition-colors"
                     >
-                      {cat}
-                    </Badge>
-                  ))}
-                </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tags.map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="outline"
-                      className="dark:border-white/5 border-gray-200 dark:bg-white/5 bg-gray-50 dark:text-white/50 text-gray-500 text-[10px] px-2 py-0 font-medium"
+                      <Github className="size-3.5" />
+                      <span>Code</span>
+                    </a>
+                    <a
+                      href="https://demo.example.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs dark:text-white/40 text-gray-500 dark:hover:text-accent-cyan hover:text-accent-blue transition-colors"
                     >
-                      {tag}
-                    </Badge>
-                  ))}
+                      <ExternalLink className="size-3.5" />
+                      <span>Live Demo</span>
+                    </a>
+                  </div>
                 </div>
-
-                {/* Links */}
-                <div className="flex items-center gap-3 pt-3 dark:border-t border-t dark:border-white/5 border-gray-200">
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-1.5 text-xs dark:text-white/40 text-gray-500 dark:hover:text-accent-cyan hover:text-accent-blue transition-colors"
-                  >
-                    <Github className="size-3.5" />
-                    <span>Code</span>
-                  </a>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-1.5 text-xs dark:text-white/40 text-gray-500 dark:hover:text-accent-cyan hover:text-accent-blue transition-colors"
-                  >
-                    <ExternalLink className="size-3.5" />
-                    <span>Live Demo</span>
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </section>

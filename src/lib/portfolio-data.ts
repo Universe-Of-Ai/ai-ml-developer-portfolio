@@ -253,6 +253,7 @@ export const publications: Publication[] = [
     venue: 'NeurIPS',
     year: '2023',
     type: 'Conference',
+    link: 'https://arxiv.org/abs/2310.00001',
   },
   {
     title: 'Retrieval-Augmented Generation for Domain-Specific Question Answering',
@@ -260,6 +261,7 @@ export const publications: Publication[] = [
     venue: 'ACL',
     year: '2023',
     type: 'Conference',
+    link: 'https://arxiv.org/abs/2305.00002',
   },
   {
     title: 'Federated Learning for Privacy-Preserving Medical Image Classification',
@@ -267,6 +269,7 @@ export const publications: Publication[] = [
     venue: 'IEEE TMI',
     year: '2022',
     type: 'Journal',
+    link: 'https://doi.org/10.1109/TMI.2022.00003',
   },
   {
     title: 'Self-Supervised Representation Learning for Drone Navigation',
@@ -274,6 +277,7 @@ export const publications: Publication[] = [
     venue: 'CVPR',
     year: '2022',
     type: 'Conference',
+    link: 'https://arxiv.org/abs/2206.00004',
   },
   {
     title: 'Scalable Sentiment Analysis Using Pre-trained Language Models',
@@ -281,6 +285,7 @@ export const publications: Publication[] = [
     venue: 'EMNLP',
     year: '2021',
     type: 'Conference',
+    link: 'https://arxiv.org/abs/2109.00005',
   },
 ];
 

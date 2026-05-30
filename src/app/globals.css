@@ -48,43 +48,7 @@
   --color-accent-violet: #8B5CF6;
 }
 
-/* ── Diana's Dark Theme (default) ── */
-.dark {
-  --radius: 0.75rem;
-  --background: #0A0A0F;
-  --foreground: #E8E8F0;
-  --card: #14141F;
-  --card-foreground: #E8E8F0;
-  --popover: #14141F;
-  --popover-foreground: #E8E8F0;
-  --primary: #00D4FF;
-  --primary-foreground: #0A0A0F;
-  --secondary: #4F7FFF;
-  --secondary-foreground: #E8E8F0;
-  --muted: #1A1A28;
-  --muted-foreground: #A0A0B8;
-  --accent: #8B5CF6;
-  --accent-foreground: #E8E8F0;
-  --destructive: #DC2626;
-  --border: rgba(255, 255, 255, 0.06);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: #00D4FF;
-  --chart-1: #00D4FF;
-  --chart-2: #4F7FFF;
-  --chart-3: #8B5CF6;
-  --chart-4: #06b6d4;
-  --chart-5: #22d3ee;
-  --sidebar: #12121A;
-  --sidebar-foreground: #E8E8F0;
-  --sidebar-primary: #00D4FF;
-  --sidebar-primary-foreground: #0A0A0F;
-  --sidebar-accent: #1A1A28;
-  --sidebar-accent-foreground: #E8E8F0;
-  --sidebar-border: rgba(255, 255, 255, 0.06);
-  --sidebar-ring: #00D4FF;
-}
-
-/* ── Diana's Light Theme ── */
+/* ── Diana's Light Theme (lower specificity) ── */
 :root {
   --radius: 0.75rem;
   --background: #F8F9FC;
@@ -120,9 +84,48 @@
   --sidebar-ring: #00B4D8;
 }
 
+/* ── Diana's Dark Theme (higher specificity — must come AFTER :root) ── */
+.dark {
+  --radius: 0.75rem;
+  --background: #0A0A0F;
+  --foreground: #E8E8F0;
+  --card: #14141F;
+  --card-foreground: #E8E8F0;
+  --popover: #14141F;
+  --popover-foreground: #E8E8F0;
+  --primary: #00D4FF;
+  --primary-foreground: #0A0A0F;
+  --secondary: #4F7FFF;
+  --secondary-foreground: #E8E8F0;
+  --muted: #1A1A28;
+  --muted-foreground: #A0A0B8;
+  --accent: #8B5CF6;
+  --accent-foreground: #E8E8F0;
+  --destructive: #DC2626;
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #00D4FF;
+  --chart-1: #00D4FF;
+  --chart-2: #4F7FFF;
+  --chart-3: #8B5CF6;
+  --chart-4: #06b6d4;
+  --chart-5: #22d3ee;
+  --sidebar: #12121A;
+  --sidebar-foreground: #E8E8F0;
+  --sidebar-primary: #00D4FF;
+  --sidebar-primary-foreground: #0A0A0F;
+  --sidebar-accent: #1A1A28;
+  --sidebar-accent-foreground: #E8E8F0;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #00D4FF;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
   }
   body {
     @apply bg-background text-foreground font-sans;

@@ -173,8 +173,12 @@ export default function Navigation() {
             <SheetContent
               side="right"
               className="dark:bg-[#0A0A0F]/95 bg-white/95 backdrop-blur-xl dark:border-white/5 border-black/5 w-72"
+              aria-describedby="mobile-nav-desc"
             >
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <p id="mobile-nav-desc" className="sr-only">
+                Navigate to different sections of the portfolio.
+              </p>
               <div className="flex flex-col gap-1 pt-8">
                 {navLinks.map((link, i) => (
                   <motion.a

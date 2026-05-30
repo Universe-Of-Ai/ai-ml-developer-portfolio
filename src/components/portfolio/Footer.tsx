@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 import { Github, Linkedin, Twitter, Heart, ArrowUp, GraduationCap } from 'lucide-react';
 
 const socialLinks = [
-  { icon: Github, href: '#', label: 'GitHub' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: GraduationCap, href: '#', label: 'Google Scholar' },
+  { icon: Github, href: 'https://github.com/zahidul-islam', label: 'GitHub' },
+  { icon: Linkedin, href: 'https://linkedin.com/in/zahidul-islam', label: 'LinkedIn' },
+  { icon: Twitter, href: 'https://x.com/zahidul_ai', label: 'Twitter' },
+  { icon: GraduationCap, href: 'https://scholar.google.com/citations?user=zahidul', label: 'Google Scholar' },
 ];
 
 export default function Footer() {
@@ -33,7 +33,7 @@ export default function Footer() {
 
           {/* Nav links */}
           <div className="flex items-center gap-6 text-sm">
-            {['About', 'Projects', 'Skills', 'Experience', 'Contact'].map(
+            {['About', 'Projects', 'Skills', 'Experience', 'Publications', 'Contact'].map(
               (link) => (
                 <a
                   key={link}
@@ -69,7 +69,7 @@ export default function Footer() {
           {/* Copyright */}
           <div className="text-center space-y-2">
             <p className="text-sm dark:text-white/30 text-gray-400 flex items-center justify-center gap-1.5">
-              © {new Date().getFullYear()} Zahidul Islam. Built with
+              © 2025 Zahidul Islam. Built with
               <Heart className="size-3 text-red-400 fill-red-400" />
               and AI.
             </p>

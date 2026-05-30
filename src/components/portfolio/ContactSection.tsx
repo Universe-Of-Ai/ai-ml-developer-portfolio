@@ -19,25 +19,25 @@ const socials = [
   {
     icon: Github,
     label: 'GitHub',
-    href: '#',
+    href: 'https://github.com/zahidul-islam',
     color: 'dark:hover:text-white hover:text-gray-900',
   },
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    href: '#',
+    href: 'https://linkedin.com/in/zahidul-islam',
     color: 'dark:hover:text-accent-blue hover:text-accent-blue',
   },
   {
     icon: Twitter,
     label: 'Twitter / X',
-    href: '#',
+    href: 'https://x.com/zahidul_ai',
     color: 'dark:hover:text-white hover:text-gray-900',
   },
   {
     icon: GraduationCap,
     label: 'Google Scholar',
-    href: '#',
+    href: 'https://scholar.google.com/citations?user=zahidul',
     color: 'dark:hover:text-accent-violet hover:text-accent-violet',
   },
   {
@@ -58,6 +58,7 @@ export default function ContactSection() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -70,15 +71,30 @@ export default function ContactSection() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', message: '' });
-      setErrors({});
-    }, 3000);
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setFormData({ name: '', email: '', message: '' });
+          setErrors({});
+        }, 3000);
+      }
+    } catch {
+      setErrors({ message: 'Failed to send. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -192,7 +208,10 @@ export default function ContactSection() {
                 </Label>
                 <Input
                   id="name"
+                  name="name"
                   placeholder="John Doe"
+                  required
+                  aria-required="true"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
@@ -213,8 +232,11 @@ export default function ContactSection() {
                 </Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="john@example.com"
+                  required
+                  aria-required="true"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -235,8 +257,11 @@ export default function ContactSection() {
                 </Label>
                 <Textarea
                   id="message"
+                  name="message"
                   placeholder="Tell me about your project or opportunity..."
                   rows={5}
+                  required
+                  aria-required="true"
                   value={formData.message}
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
@@ -251,7 +276,8 @@ export default function ContactSection() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full bg-gradient-to-r from-accent-cyan to-accent-blue hover:from-accent-cyan/90 hover:to-accent-blue/90 text-white border-0 shadow-lg shadow-accent-cyan/25 h-12 text-base font-semibold rounded-xl"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-accent-cyan to-accent-blue hover:from-accent-cyan/90 hover:to-accent-blue/90 text-white border-0 shadow-lg shadow-accent-cyan/25 h-12 text-base font-semibold rounded-xl disabled:opacity-50"
               >
                 {submitted ? (
                   <span className="flex items-center gap-2">
@@ -260,9 +286,18 @@ export default function ContactSection() {
                       animate={{ scale: 1 }}
                       transition={{ type: 'spring', bounce: 0.5 }}
                     >
-                      ✓
+                      Message Sent!
                     </motion.span>
-                    Message Sent!
+                  </span>
+                ) : isSubmitting ? (
+                  <span className="flex items-center gap-2">
+                    <motion.span
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                    >
+                      ...
+                    </motion.span>
+                    Sending...
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">

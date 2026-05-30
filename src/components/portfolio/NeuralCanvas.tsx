@@ -54,8 +54,8 @@ export default function NeuralCanvas() {
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 2 + 1,
-        opacity: Math.random() * 0.5 + 0.3,
+        radius: Math.random() * 3 + 2,
+        opacity: Math.random() * 0.5 + 0.5,
         pulsePhase: Math.random() * Math.PI * 2,
       });
     }
@@ -99,30 +99,32 @@ export default function NeuralCanvas() {
         // Pulse effect
         const pulse = Math.sin(time * 2 + node.pulsePhase) * 0.3 + 0.7;
 
-        // Draw node
+        // Draw node (larger, more opaque)
+        const r = Math.max(0.5, node.radius * pulse);
         ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius * pulse, 0, Math.PI * 2);
+        ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(0, 212, 255, ${node.opacity * pulse})`;
         ctx.fill();
 
-        // Glow
+        // Glow (larger, more visible)
+        const glowR = Math.max(1, node.radius * 4 * pulse);
         ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius * 3 * pulse, 0, Math.PI * 2);
+        ctx.arc(node.x, node.y, glowR, 0, Math.PI * 2);
         const gradient = ctx.createRadialGradient(
           node.x,
           node.y,
           0,
           node.x,
           node.y,
-          node.radius * 3 * pulse
+          glowR
         );
-        gradient.addColorStop(0, `rgba(0, 212, 255, ${0.12 * pulse})`);
+        gradient.addColorStop(0, `rgba(0, 212, 255, ${0.2 * pulse})`);
         gradient.addColorStop(1, 'rgba(0, 212, 255, 0)');
         ctx.fillStyle = gradient;
         ctx.fill();
       }
 
-      // Draw connections
+      // Draw connections (more visible)
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
@@ -130,7 +132,7 @@ export default function NeuralCanvas() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < connectionDistance) {
-            const opacity = (1 - dist / connectionDistance) * 0.2;
+            const opacity = (1 - dist / connectionDistance) * 0.35;
             const pulseA = Math.sin(time * 2 + nodes[i].pulsePhase) * 0.3 + 0.7;
             const pulseB = Math.sin(time * 2 + nodes[j].pulsePhase) * 0.3 + 0.7;
 
@@ -138,7 +140,7 @@ export default function NeuralCanvas() {
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
             ctx.strokeStyle = `rgba(139, 92, 246, ${opacity * pulseA * pulseB})`;
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }
@@ -152,12 +154,12 @@ export default function NeuralCanvas() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < 200) {
-            const opacity = (1 - dist / 200) * 0.3;
+            const opacity = (1 - dist / 200) * 0.4;
             ctx.beginPath();
             ctx.moveTo(mouseRef.current.x, mouseRef.current.y);
             ctx.lineTo(node.x, node.y);
             ctx.strokeStyle = `rgba(79, 127, 255, ${opacity})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
@@ -180,6 +182,7 @@ export default function NeuralCanvas() {
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
       style={{ pointerEvents: 'none' }}
+      aria-hidden="true"
     />
   );
 }

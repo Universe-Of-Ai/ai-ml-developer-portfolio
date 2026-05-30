@@ -13,6 +13,14 @@ const fadeInUp = {
   }),
 };
 
+const gradientMap: Record<number, string> = {
+  0: 'linear-gradient(90deg, #00D4FF, #4F7FFF)',
+  1: 'linear-gradient(90deg, #8B5CF6, #A855F7)',
+  2: 'linear-gradient(90deg, #34D399, #22C55E)',
+  3: 'linear-gradient(90deg, #F472B6, #F43F5E)',
+  4: 'linear-gradient(90deg, #FBBF24, #F97316)',
+};
+
 export default function SkillsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
@@ -55,7 +63,8 @@ export default function SkillsSection() {
               {/* Group header */}
               <div className="flex items-center gap-3 mb-5">
                 <div
-                  className={`flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br ${group.color} shadow-lg`}
+                  className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br shadow-lg"
+                  style={{ backgroundImage: gradientMap[gi] || gradientMap[0] }}
                 >
                   <group.icon className="size-5 text-white" />
                 </div>
@@ -76,7 +85,7 @@ export default function SkillsSection() {
                         {skill.level}%
                       </span>
                     </div>
-                    <div className="h-2 w-full dark:bg-white/5 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="h-2.5 w-full dark:bg-white/5 bg-gray-100 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={
@@ -87,7 +96,10 @@ export default function SkillsSection() {
                           delay: 0.3 + gi * 0.15 + si * 0.08,
                           ease: 'easeOut',
                         }}
-                        className={`h-full bg-gradient-to-r ${group.color} rounded-full`}
+                        className="h-full rounded-full"
+                        style={{
+                          backgroundImage: gradientMap[gi] || gradientMap[0],
+                        }}
                       />
                     </div>
                   </div>

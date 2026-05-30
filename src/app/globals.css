@@ -183,53 +183,21 @@
 /*  Mobile fallback: floating shape animations                         */
 /* ------------------------------------------------------------------ */
 @keyframes float-1 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(10px, -15px) rotate(120deg); }
-  66% { transform: translate(-8px, 8px) rotate(240deg); }
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(8px, -12px); }
 }
 @keyframes float-2 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(-12px, 10px) rotate(-120deg); }
-  66% { transform: translate(6px, -12px) rotate(-240deg); }
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-10px, 8px); }
 }
 @keyframes float-3 {
   0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(15px, -20px); }
+  50% { transform: translate(6px, -15px); }
 }
 @keyframes float-4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-10px, 15px) scale(1.2); }
-}
-@keyframes float-5 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(8px, -8px) rotate(90deg); }
-  50% { transform: translate(-5px, 12px) rotate(180deg); }
-  75% { transform: translate(-10px, -5px) rotate(270deg); }
-}
-@keyframes float-6 {
   0%, 100% { transform: translate(0, 0); }
-  33% { transform: translate(-15px, 8px); }
-  66% { transform: translate(10px, -10px); }
+  50% { transform: translate(-8px, 10px); }
 }
-@keyframes float-7 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(5px, -18px) scale(0.8); }
-}
-@keyframes float-8 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-12px, -8px); }
-}
-@keyframes float-9 {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.1); }
-}
-@keyframes float-10 {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(-180deg); }
-}
-
-.animate-float-9 { animation: float-9 7s ease-in-out infinite; }
-.animate-float-10 { animation: float-10 9s ease-in-out infinite; }
 
 /* ------------------------------------------------------------------ */
 /*  Scrollbar styling                                                  */

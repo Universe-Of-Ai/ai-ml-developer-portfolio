@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef, useMemo, useCallback, useEffect, Suspense } from 'react';
+import { useRef, useCallback, useEffect, Suspense } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { Float } from '@react-three/drei';
-import { EffectComposer, Bloom, ChromaticAberration, Vignette } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 
@@ -18,12 +18,12 @@ export const sceneState = {
   scrollY: 0,
 };
 
-const NUM_PARTICLES = 2500;
-const PARTICLE_ATTRACT_RADIUS = 2.5;
-const PARTICLE_ATTRACT_FORCE = 0.015;
-const PARTICLE_RETURN_FORCE = 0.02;
-const RIPPLE_DURATION = 2.5;
-const RIPPLE_SPEED = 4;
+const NUM_PARTICLES = 600;
+const PARTICLE_ATTRACT_RADIUS = 3.0;
+const PARTICLE_ATTRACT_FORCE = 0.01;
+const PARTICLE_RETURN_FORCE = 0.015;
+const RIPPLE_DURATION = 2.0;
+const RIPPLE_SPEED = 3;
 
 /* ------------------------------------------------------------------ */
 /*  Shader for iridescent crystal                                      */
@@ -104,7 +104,7 @@ function IridescentCrystal() {
   });
 
   return (
-    <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.4}>
+    <Float speed={0.8} rotationIntensity={0.1} floatIntensity={0.3}>
       <mesh ref={meshRef}>
         <dodecahedronGeometry args={[1.6, 0]} />
         <shaderMaterial
@@ -145,16 +145,11 @@ interface OrbitDef {
 }
 
 const orbitDefs: OrbitDef[] = [
-  { geo: 'sphere', color: '#8b5cf6', emissive: '#8b5cf6', orbitRadius: 3.2, speed: 0.45, size: 0.14, phase: 0, yAmp: 0.6, yFreq: 1.2, selfRotSpeed: 2 },
-  { geo: 'box', color: '#06b6d4', wireframe: true, orbitRadius: 3.8, speed: -0.32, size: 0.18, phase: 0.9, yAmp: 0.4, yFreq: 0.8, selfRotSpeed: 3 },
-  { geo: 'torus', color: '#ec4899', transparent: true, opacity: 0.5, orbitRadius: 4.3, speed: 0.38, size: 0.18, phase: 1.8, yAmp: 0.7, yFreq: 1.5, selfRotSpeed: 2.5 },
-  { geo: 'torusKnot', color: '#a855f7', emissive: '#a855f7', orbitRadius: 4.8, speed: -0.22, size: 0.12, phase: 2.7, yAmp: 0.9, yFreq: 0.6, selfRotSpeed: 1.8 },
-  { geo: 'octahedron', color: '#06b6d4', emissive: '#06b6d4', orbitRadius: 3.5, speed: 0.55, size: 0.16, phase: 3.6, yAmp: 0.3, yFreq: 1.1, selfRotSpeed: 4 },
-  { geo: 'icosahedron', color: '#ec4899', wireframe: true, orbitRadius: 5.2, speed: 0.18, size: 0.22, phase: 4.5, yAmp: 1.0, yFreq: 0.7, selfRotSpeed: 2 },
-  { geo: 'sphere', color: '#8b5cf6', transparent: true, opacity: 0.35, orbitRadius: 2.9, speed: -0.48, size: 0.11, phase: 5.4, yAmp: 0.5, yFreq: 1.4, selfRotSpeed: 3.5 },
-  { geo: 'dodecahedron', color: '#06b6d4', emissive: '#06b6d4', orbitRadius: 5.6, speed: 0.14, size: 0.17, phase: 0.5, yAmp: 0.8, yFreq: 0.9, selfRotSpeed: 1.5 },
-  { geo: 'box', color: '#ec4899', transparent: true, opacity: 0.45, orbitRadius: 4.0, speed: -0.4, size: 0.15, phase: 1.4, yAmp: 0.6, yFreq: 1.3, selfRotSpeed: 2.8 },
-  { geo: 'ring', color: '#c084fc', wireframe: true, orbitRadius: 3.0, speed: 0.6, size: 0.2, phase: 2.3, yAmp: 0.45, yFreq: 1.0, selfRotSpeed: 1.2 },
+  { geo: 'sphere', color: '#8b5cf6', emissive: '#8b5cf6', orbitRadius: 3.6, speed: 0.35, size: 0.12, phase: 0, yAmp: 0.3, yFreq: 1.0, selfRotSpeed: 1.5 },
+  { geo: 'octahedron', color: '#06b6d4', wireframe: true, orbitRadius: 4.2, speed: -0.25, size: 0.15, phase: 1.5, yAmp: 0.25, yFreq: 0.8, selfRotSpeed: 2 },
+  { geo: 'torus', color: '#ec4899', transparent: true, opacity: 0.4, orbitRadius: 5.0, speed: 0.2, size: 0.16, phase: 3.0, yAmp: 0.4, yFreq: 1.2, selfRotSpeed: 1.8 },
+  { geo: 'ring', color: '#c084fc', wireframe: true, orbitRadius: 3.2, speed: 0.42, size: 0.18, phase: 4.5, yAmp: 0.2, yFreq: 0.9, selfRotSpeed: 1.2 },
+  { geo: 'dodecahedron', color: '#22d3ee', emissive: '#06b6d4', orbitRadius: 5.5, speed: -0.15, size: 0.1, phase: 6.0, yAmp: 0.5, yFreq: 0.7, selfRotSpeed: 1 },
 ];
 
 function OrbitingObject({ def }: { def: OrbitDef }) {
@@ -260,9 +255,9 @@ function ParticleField() {
       const armCount = 3;
       const arm = Math.floor(Math.random() * armCount);
       const armAngle = (arm / armCount) * Math.PI * 2;
-      const dist = Math.random() * 9 + 1.5;
+      const dist = Math.random() * 12 + 2.5;
       const spiralAngle = dist * 0.35 + armAngle;
-      const spread = (Math.random() - 0.5) * (dist * 0.5 + 0.5);
+      const spread = (Math.random() - 0.5) * (dist * 0.4 + 0.3);
 
       positions[i3] = Math.cos(spiralAngle) * dist + spread * 0.5;
       positions[i3 + 1] = (Math.random() - 0.5) * 2.5;
@@ -393,10 +388,10 @@ function SceneLights() {
 
   return (
     <>
-      <ambientLight intensity={0.08} />
-      <pointLight ref={light1} color="#8b5cf6" intensity={3} distance={15} />
-      <pointLight ref={light2} color="#06b6d4" intensity={2.5} distance={15} />
-      <pointLight ref={light3} color="#ec4899" intensity={2.5} distance={15} />
+      <ambientLight intensity={0.12} />
+      <pointLight ref={light1} color="#8b5cf6" intensity={2} distance={18} />
+      <pointLight ref={light2} color="#06b6d4" intensity={1.8} distance={18} />
+      <pointLight ref={light3} color="#ec4899" intensity={1.5} distance={18} />
     </>
   );
 }
@@ -464,11 +459,6 @@ function InteractionPlane() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Chromatic aberration offset constant                               */
-/* ------------------------------------------------------------------ */
-const CHROMA_OFFSET = new THREE.Vector2(0.001, 0.001);
-
-/* ------------------------------------------------------------------ */
 /*  Scene content (all 3D objects + post-processing)                   */
 /* ------------------------------------------------------------------ */
 function SceneContent() {
@@ -482,21 +472,15 @@ function SceneContent() {
       <ParticleField />
       <EffectComposer>
         <Bloom
-          intensity={1.4}
-          luminanceThreshold={0.15}
+          intensity={0.8}
+          luminanceThreshold={0.2}
           luminanceSmoothing={0.9}
           mipmapBlur
         />
-        <ChromaticAberration
-          blendFunction={BlendFunction.NORMAL}
-          offset={CHROMA_OFFSET}
-          radialModulation
-          modulationOffset={0.5}
-        />
         <Vignette
           blendFunction={BlendFunction.NORMAL}
-          offset={0.3}
-          darkness={0.7}
+          offset={0.35}
+          darkness={0.5}
         />
       </EffectComposer>
     </>
@@ -545,7 +529,7 @@ export default function Hero3DScene() {
     <div className="absolute inset-0">
       <Suspense fallback={<Loader />}>
         <Canvas
-          camera={{ position: [0, 0, 7], fov: 60 }}
+          camera={{ position: [0, 0, 8], fov: 55 }}
           dpr={[1, 1.5]}
           gl={{ antialias: true, alpha: false }}
           onCreated={handleCreated}

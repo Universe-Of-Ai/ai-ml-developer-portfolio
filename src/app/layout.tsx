@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
-  title: "NEXUS — Universe of AI",
-  description: "Where creativity meets intelligence. Immersive digital experiences that push boundaries.",
+  title: "Zahidul Islam — AI & Machine Learning Developer",
+  description:
+    "Portfolio of Zahidul Islam — Building intelligent systems with deep learning, NLP, and computer vision.",
   icons: {
-    icon: "https://picsum.photos/seed/nexus-fav/32/32",
+    icon: "/logo.svg",
   },
 };
 
@@ -17,17 +19,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
-        {children}
+      <body className="antialiased overflow-x-hidden">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
         <Toaster
           position="top-center"
           toastOptions={{
             style: {
               borderRadius: "12px",
-              background: "#1a1a2e",
-              border: "1px solid rgba(139,92,246,0.3)",
-              boxShadow: "0 4px 24px rgba(139,92,246,0.15)",
-              color: "#fff",
               fontFamily: "system-ui, sans-serif",
             },
           }}

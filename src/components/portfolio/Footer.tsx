@@ -1,12 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Heart, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Twitter, Heart, ArrowUp, GraduationCap } from 'lucide-react';
 
 const socialLinks = [
   { icon: Github, href: '#', label: 'GitHub' },
   { icon: Linkedin, href: '#', label: 'LinkedIn' },
   { icon: Twitter, href: '#', label: 'Twitter' },
+  { icon: GraduationCap, href: '#', label: 'Google Scholar' },
 ];
 
 export default function Footer() {
@@ -15,7 +16,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-white/5 bg-[#0a0a0f]">
+    <footer className="relative dark:border-t dark:border-white/5 border-t border-gray-200 dark:bg-[#0A0A0F] bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         <div className="flex flex-col items-center gap-6">
           {/* Logo */}
@@ -25,10 +26,31 @@ export default function Footer() {
               e.preventDefault();
               scrollToTop();
             }}
-            className="text-2xl font-black bg-gradient-to-br from-cyan-400 to-violet-500 bg-clip-text text-transparent"
+            className="text-2xl font-black gradient-text"
           >
             ZI
           </a>
+
+          {/* Nav links */}
+          <div className="flex items-center gap-6 text-sm">
+            {['About', 'Projects', 'Skills', 'Experience', 'Contact'].map(
+              (link) => (
+                <a
+                  key={link}
+                  href={`#${link.toLowerCase()}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document
+                      .getElementById(link.toLowerCase())
+                      ?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="dark:text-white/40 text-gray-500 dark:hover:text-white hover:text-gray-900 transition-colors"
+                >
+                  {link}
+                </a>
+              )
+            )}
+          </div>
 
           {/* Social links */}
           <div className="flex items-center gap-3">
@@ -37,7 +59,7 @@ export default function Footer() {
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
-                className="flex items-center justify-center w-10 h-10 rounded-xl border border-white/5 bg-white/[0.02] text-white/40 hover:text-white hover:bg-white/5 hover:border-white/10 transition-all"
+                className="flex items-center justify-center w-10 h-10 rounded-xl dark:border-white/5 border-gray-200 dark:bg-white/[0.02] bg-gray-50 dark:text-white/40 text-gray-500 dark:hover:text-white hover:text-gray-900 dark:hover:bg-white/5 hover:bg-gray-100 dark:hover:border-white/10 hover:border-gray-300 transition-all"
               >
                 <social.icon className="size-4" />
               </a>
@@ -46,13 +68,13 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="text-center space-y-2">
-            <p className="text-sm text-white/30 flex items-center justify-center gap-1.5">
+            <p className="text-sm dark:text-white/30 text-gray-400 flex items-center justify-center gap-1.5">
               © {new Date().getFullYear()} Zahidul Islam. Built with
               <Heart className="size-3 text-red-400 fill-red-400" />
               and AI.
             </p>
-            <p className="text-xs text-white/15">
-              Powered by Next.js, Tailwind CSS & Framer Motion
+            <p className="text-xs dark:text-white/15 text-gray-300">
+              Powered by Next.js, Tailwind CSS &amp; Framer Motion
             </p>
           </div>
         </div>
@@ -63,7 +85,7 @@ export default function Footer() {
         onClick={scrollToTop}
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-11 h-11 rounded-xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 backdrop-blur-sm transition-all shadow-lg"
+        className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-11 h-11 rounded-xl dark:bg-white/5 bg-gray-100 dark:border-white/10 border-gray-200 dark:text-white/40 text-gray-500 dark:hover:text-white hover:text-gray-900 dark:hover:bg-white/10 hover:bg-gray-200 backdrop-blur-sm transition-all shadow-lg safe-bottom"
         aria-label="Scroll to top"
       >
         <ArrowUp className="size-4" />

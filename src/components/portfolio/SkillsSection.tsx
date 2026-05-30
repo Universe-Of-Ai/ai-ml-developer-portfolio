@@ -2,60 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import {
-  Brain,
-  Cpu,
-  MessageSquare,
-  Eye,
-  Database,
-  Cloud,
-} from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-
-const skillCategories = [
-  {
-    icon: Brain,
-    title: 'Machine Learning',
-    color: 'from-cyan-500 to-cyan-600',
-    shadowColor: 'shadow-cyan-500/20',
-    skills: ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras'],
-  },
-  {
-    icon: Cpu,
-    title: 'Deep Learning',
-    color: 'from-violet-500 to-violet-600',
-    shadowColor: 'shadow-violet-500/20',
-    skills: ['CNN', 'RNN', 'Transformers', 'GANs'],
-  },
-  {
-    icon: MessageSquare,
-    title: 'NLP',
-    color: 'from-emerald-500 to-emerald-600',
-    shadowColor: 'shadow-emerald-500/20',
-    skills: ['BERT', 'GPT', 'spaCy', 'NLTK'],
-  },
-  {
-    icon: Eye,
-    title: 'Computer Vision',
-    color: 'from-pink-500 to-pink-600',
-    shadowColor: 'shadow-pink-500/20',
-    skills: ['OpenCV', 'YOLO', 'ResNet', 'GANs'],
-  },
-  {
-    icon: Database,
-    title: 'Data & Tools',
-    color: 'from-amber-500 to-amber-600',
-    shadowColor: 'shadow-amber-500/20',
-    skills: ['Python', 'Pandas', 'NumPy', 'SQL'],
-  },
-  {
-    icon: Cloud,
-    title: 'Cloud & Deploy',
-    color: 'from-red-500 to-red-600',
-    shadowColor: 'shadow-red-500/20',
-    skills: ['AWS', 'Docker', 'FastAPI', 'Streamlit'],
-  },
-];
+import { skillGroups } from '@/lib/portfolio-data';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -72,7 +19,7 @@ export default function SkillsSection() {
 
   return (
     <section id="skills" className="relative py-24 sm:py-32">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-500/[0.02] to-transparent" />
+      <div className="absolute inset-0 dark:bg-gradient-to-b dark:from-transparent dark:via-accent-violet/[0.02] dark:to-transparent bg-gradient-to-b from-transparent via-accent-violet/[0.02] to-transparent" />
 
       <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section heading */}
@@ -82,68 +29,69 @@ export default function SkillsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-block text-violet-400 text-sm font-semibold uppercase tracking-widest mb-3">
+          <span className="inline-block dark:text-accent-violet text-purple-600 text-sm font-semibold uppercase tracking-widest mb-3">
             Technical Skills
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-            My{' '}
-            <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-              Skill Set
-            </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold dark:text-white text-gray-900">
+            My <span className="gradient-text">Skill Set</span>
           </h2>
-          <p className="mt-4 text-white/40 max-w-2xl mx-auto text-sm sm:text-base">
+          <p className="mt-4 dark:text-white/40 text-gray-500 max-w-2xl mx-auto text-sm sm:text-base">
             A comprehensive toolkit spanning the full AI/ML development lifecycle
             — from research and prototyping to production deployment.
           </p>
         </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {skillCategories.map((category, i) => (
+        {/* Skill Groups */}
+        <div className="space-y-8 sm:space-y-10">
+          {skillGroups.map((group, gi) => (
             <motion.div
-              key={category.title}
-              custom={i}
+              key={group.title}
+              custom={gi}
               variants={fadeInUp}
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
-              whileHover={{ y: -6, scale: 1.02 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm p-6 hover:border-white/10 transition-all duration-300"
+              className="rounded-2xl dark:border-white/5 border-gray-200 dark:bg-white/[0.02] bg-white p-5 sm:p-6"
             >
-              {/* Hover glow */}
-              <div className={`absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br ${category.color} rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+              {/* Group header */}
+              <div className="flex items-center gap-3 mb-5">
+                <div
+                  className={`flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br ${group.color} shadow-lg`}
+                >
+                  <group.icon className="size-5 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold dark:text-white text-gray-900">
+                  {group.title}
+                </h3>
+              </div>
 
-              <div className="relative">
-                {/* Icon & Title */}
-                <div className="flex items-center gap-3 mb-5">
-                  <div className={`flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br ${category.color} shadow-lg ${category.shadowColor}`}>
-                    <category.icon className="size-5 text-white" />
+              {/* Skill bars */}
+              <div className="space-y-4">
+                {group.skills.map((skill, si) => (
+                  <div key={skill.name} className="group/skill">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-sm font-medium dark:text-white/70 text-gray-600">
+                        {skill.name}
+                      </span>
+                      <span className="text-xs font-mono dark:text-white/40 text-gray-500">
+                        {skill.level}%
+                      </span>
+                    </div>
+                    <div className="h-2 w-full dark:bg-white/5 bg-gray-100 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={
+                          isInView ? { width: `${skill.level}%` } : { width: 0 }
+                        }
+                        transition={{
+                          duration: 1.2,
+                          delay: 0.3 + gi * 0.15 + si * 0.08,
+                          ease: 'easeOut',
+                        }}
+                        className={`h-full bg-gradient-to-r ${group.color} rounded-full`}
+                      />
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold text-white">{category.title}</h3>
-                </div>
-
-                {/* Skill tags */}
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill) => (
-                    <Badge
-                      key={skill}
-                      className="border-white/10 bg-white/5 text-white/60 hover:bg-white/10 hover:text-white/80 text-xs px-2.5 py-0.5 transition-colors"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-
-                {/* Animated progress bar */}
-                <div className="mt-5">
-                  <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={isInView ? { width: `${75 + Math.random() * 25}%` } : { width: 0 }}
-                      transition={{ duration: 1.2, delay: 0.5 + i * 0.1, ease: 'easeOut' }}
-                      className={`h-full bg-gradient-to-r ${category.color} rounded-full`}
-                    />
-                  </div>
-                </div>
+                ))}
               </div>
             </motion.div>
           ))}

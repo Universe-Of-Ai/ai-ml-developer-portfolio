@@ -18,3 +18,4 @@ supabase-schema.sql
 cover.html
 .vercel
 .vercel-token
+out/

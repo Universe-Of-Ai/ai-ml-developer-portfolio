@@ -1,28 +1,27 @@
 'use client';
 
-import { useState } from 'react';
-import HeroSection from '@/components/hero/HeroSection';
-import ServicesSection from '@/components/sections/ServicesSection';
-import PortfolioSection from '@/components/sections/PortfolioSection';
-import AboutSection from '@/components/sections/AboutSection';
-import ContactSection from '@/components/sections/ContactSection';
-import Footer from '@/components/sections/Footer';
-import WorkspaceButton from '@/components/workspace/WorkspaceButton';
-import WorkspaceOverlay from '@/components/workspace/WorkspaceOverlay';
+import Navigation from '@/components/portfolio/Navigation';
+import HeroSection from '@/components/portfolio/HeroSection';
+import AboutSection from '@/components/portfolio/AboutSection';
+import SkillsSection from '@/components/portfolio/SkillsSection';
+import ProjectsSection from '@/components/portfolio/ProjectsSection';
+import ExperienceSection from '@/components/portfolio/ExperienceSection';
+import ContactSection from '@/components/portfolio/ContactSection';
+import Footer from '@/components/portfolio/Footer';
 
 export default function HomePage() {
-  const [workspaceOpen, setWorkspaceOpen] = useState(false);
-
   return (
-    <main className="relative overflow-x-hidden">
-      <HeroSection />
-      <ServicesSection />
-      <PortfolioSection />
-      <AboutSection />
-      <ContactSection />
+    <div className="min-h-screen flex flex-col bg-[#0a0a0f]">
+      <Navigation />
+      <main className="flex-1">
+        <HeroSection />
+        <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <ExperienceSection />
+        <ContactSection />
+      </main>
       <Footer />
-      <WorkspaceButton onClick={() => setWorkspaceOpen(true)} />
-      <WorkspaceOverlay isOpen={workspaceOpen} onClose={() => setWorkspaceOpen(false)} />
-    </main>
+    </div>
   );
 }

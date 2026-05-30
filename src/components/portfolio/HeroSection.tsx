@@ -158,14 +158,21 @@ export default function HeroSection() {
             <Eye className="size-4 mr-2" />
             View Projects
           </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="dark:border-white/10 border-gray-300 dark:hover:border-accent-cyan/30 hover:border-accent-cyan dark:text-white/80 text-gray-700 dark:hover:text-white hover:text-gray-900 dark:hover:bg-accent-cyan/5 hover:bg-accent-cyan/10 h-12 px-8 text-base rounded-xl font-semibold"
+          <a
+            href="/Zahidul_Islam_CV.pdf"
+            download
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <Download className="size-4 mr-2" />
-            Download CV
-          </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="dark:border-white/10 border-gray-300 dark:hover:border-accent-cyan/30 hover:border-accent-cyan dark:text-white/80 text-gray-700 dark:hover:text-white hover:text-gray-900 dark:hover:bg-accent-cyan/5 hover:bg-accent-cyan/10 h-12 px-8 text-base rounded-xl font-semibold"
+            >
+              <Download className="size-4 mr-2" />
+              Download CV
+            </Button>
+          </a>
         </motion.div>
       </div>
 
